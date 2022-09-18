@@ -20,7 +20,7 @@ var quotes = [ {
 },
 
 {
-  quote:  'Without persistance, you will be defeated before you even start."',
+  quote:  'Without persistance, you will be defeated before you even start.',
   source: 'Napoleon Hill',
   year: 1937,
   citation: 'Think and Grow Rich'
@@ -29,9 +29,20 @@ var quotes = [ {
 {
  quote: 'When you change your thoughts, remember to also change your world.',
  source: 'Norman Vincent Peale'
-}];
-//quotes array is holding quotes said by individuals to be stored for future use inside an object.
+},
 
+{
+  quote: 'Instead of thinking how hard your journey is, think how great your story will be.',
+  source: 'Andy Frisella',
+  tag: 'Owner of 1st Phorm Supplements'
+},
+
+{
+  quote: 'The bottom line is that life is one big mind game. The only person you are playing against is yourself.',
+  source: 'David Goggins'
+}
+];
+//quotes array is holding quotes said by individuals to be stored for future use inside objects.
 
 var colors = [
   {
@@ -61,9 +72,10 @@ var colors = [
   {
       background: "#006E7F"
   }
-  
 ];
-//collors array is holding colors to be outputted in a randomizing order to change baackground color.
+//collors array is holding colors to be outputted in a randomizing order to change background color.
+
+let timer;
 
 function getRandomColor() {
   let randomColor = Math.floor(Math.random() * colors.length);
@@ -77,8 +89,17 @@ function getRandomQuote() {
 
   return quotes[randomQuote];
 }
-//getrandomQuote generates a random number and assigns it to a variable then uses it to return a random object from the array.
+// getrandomQuote generates a random number and assigns it to a variable then uses it to return a random object from the array.
 
+function startTimer() {
+  timer = setInterval(printQuote, 20000);
+}
+// refreshes the page every 20 seconds using setInterval
+
+function clearTimer() {
+  clearInterval(timer);
+}
+//clears the timer
 
 function printQuote() {
   let currentColor = getRandomColor();
@@ -93,29 +114,28 @@ if ("citation" in currentQuote) {
   html += "<span class='source'>" +
   currentQuote.citation + "</span>"
 }
-// checks to see if citation property is available 
+// checks to see if citation property is available and uses it if so.
 
 if ("year" in currentQuote) {
   html += "<span class='year'>" + currentQuote.year + "</span>";
 }
-// checks to see if year property is available 
+// checks to see if year property is available and uses it if so.
+
 if ("tag" in currentQuote) {
   html += "<span class='tag'>" + currentQuote.tag + "</span>"
 }
+// checks to see if tag property is available and uses it if so.
 
-document.getElementById("quote-box").innerHTML = html;
-document.body.style.background = currentColor.background;
-document.getElementById("load-quote").style.background = currentColor.button;
+  document.getElementById("quote-box").innerHTML = html;
+  document.body.style.background = currentColor.background;
+  document.getElementById("load-quote").style.background = currentColor.button;
 
+  clearTimer();
+  startTimer();
 }
 printQuote();
 
 
-
-
-/***
- * click event listener for the print quote button
- * DO NOT CHANGE THE CODE BELOW!!
-***/
+ //click event listener for the print quote button
 
 document.getElementById('load-quote').addEventListener("click", printQuote, false);   
